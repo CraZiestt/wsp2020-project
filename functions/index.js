@@ -223,6 +223,89 @@ app.get('/b/orderhistory', authAndRedirectSignIn, async (req, res) => {
     }
 })
 
+
+const Wishlist = require('./model/Wishlist.js')
+
+app.post('/b/add3cart', async (req, res) => {
+    const id = req.body.docId
+    const collection = firebase.firestore().collection(Constants.COLL_WDATAS)
+    try {
+        const doc = await collection.doc(id).get()
+        let cart;
+        if (!req.session.cart) {
+            //first time add to cart
+            cart = new Wishlist()
+        } else {
+            cart = Wishlist.deserialize(req.session.cart)
+        }
+        const {name, price, summary, image, image_url} = doc.data()
+        cart.add({id, name, price, summary, image, image_url})
+        req.session.cart = cart.serialize()
+        // res.setHeader('Cache-Control', 'private');
+        res.redirect('/b/wishlist')
+    } catch(e) {
+        res.send(JSON.stringify(e))
+        // res.setHeader('Cache-Control', 'private');
+    }
+})
+
+app.get('/b/wishlist', authAndRedirectSignIn, (req, res) => {
+    let cart
+    // console.log(req.session)
+    if (!req.session.cart) {
+        cart = new Wishlist()
+    } else {
+        cart = Wishlist.deserialize(req.session.cart)
+    }
+    // res.setHeader('Cache-Control', 'private');
+    // res.render('wishlist.ejs', { cart, user: false})
+    res.send(JSON.stringify(cart.contents))
+})
+
+app.post('/b/addqty', async (req, res) => {
+    const id = req.body.refid
+    const collection = firebase.firestore().collection(Constants.COLL_PRODUCTS)
+    try {
+        const doc = await collection.doc(id).get()
+        let cart;
+        if (!req.session.cart) {
+            //first time add to cart
+        } else {
+            cart = ShoppingCart.deserialize(req.session.cart)
+        }
+        const {name, price, summary, image, image_url} = doc.data()
+        cart.add({id, name, price, summary, image, image_url})
+        req.session.cart = cart.serialize()
+        res.setHeader('Cache-Control', 'private');
+        res.redirect('/b/shoppingcart')
+    } catch(e) {
+        res.send(JSON.stringify(e))
+        res.setHeader('Cache-Control', 'private');
+    }
+})
+
+app.post('/b/subqty', async (req, res) => {
+    const id = req.body.refid
+    const collection = firebase.firestore().collection(Constants.COLL_PRODUCTS)
+    try {
+        const doc = await collection.doc(id).get()
+        let cart;
+        if (!req.session.cart) {
+            //first time add to cart
+        } else {
+            cart = ShoppingCart.deserialize(req.session.cart)
+        }
+        const {name, price, summary, image, image_url} = doc.data()
+        cart.subqty({id, name, price, summary, image, image_url})
+        req.session.cart = cart.serialize()
+        res.setHeader('Cache-Control', 'private');
+        res.redirect('/b/shoppingcart')
+    } catch(e) {
+        res.send(JSON.stringify(e))
+        res.setHeader('Cache-Control', 'private');
+    }
+})
+
 //middleware
 function authAndRedirectSignIn(req, res, next) {
     const user = firebase.auth().currentUser

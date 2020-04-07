@@ -29,6 +29,11 @@
                 <input type="hidden" name="docId" value="<%= p.id %>">
                 <button type="submit" class="btn btn-primary">Add to ShoppingCart</button>
             </form>
+            <br>
+            <form action="/b/add3cart" method="post">
+              <input type="hidden" name="docId" value="<%= p.id %>">
+              <button type="submit" class="btn btn-primary">Add to Wishlist</button>
+          </form>
             </div>
           </div>
         <% } %>

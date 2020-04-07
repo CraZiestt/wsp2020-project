@@ -29,6 +29,10 @@
             <a class="nav-link" href="/b/shoppingcart">
                ShoppingCart<%= cartCount> 0 ? `(${cartCount})` : ''%></a>
          </li>
+         <li class="nav-item <%= page ==='wishlist' ? 'active' : '' %>">
+            <a class="nav-link" href="/b/wishlist">
+               Wishlist<%= cartCount> 0 ? `(${cartCount})` : ''%></a>
+         </li>
       </ul>
     </div>
   </nav>
