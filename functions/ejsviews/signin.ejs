@@ -11,11 +11,7 @@
     </head>
     <body>
      <%- include('partials/nav.ejs' , {page: 'signin', user}) %>
-
-    
-    
-
-    
+  
     <form class="form-signin" action="/b/signin" method="post">
         <h3>Please Sign in</h3>
         <% if (error) { %>

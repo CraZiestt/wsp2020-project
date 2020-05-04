@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ <head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>EverestKart - Order Success</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body style="margin: 0; padding: 0;">
+  <h3>Hi, {{ user }}</h3>
+  <p>Thank you for your order! Here is your order details.</p>
+ <table border="1" cellpadding="0" cellspacing="0" width="100%">
+   <thead>
+    <tr>
+      <th style="padding:10px;">Product Name</th>
+      <th style="padding:10px;">Quantity</th>
+      <th style="padding:10px;">Price</th>
+      <th style="padding:10px;">Total</th>
+    </tr>
+  </thead>
+  <tfoot>
+    <tr>
+      <td colspan="3" style="padding:10px;"><strong>Delivery Charge</strong></td>
+      <td colspan="2" style="padding:10px;">FREE</td>
+    </tr>
+    <tr>
+      <td colspan="3" style="padding:10px;"><strong>Grand Total</strong></td>
+      <td colspan="2" style="padding:10px;"> $ {{ grand }}</td>
+    </tr>
+  </tfoot>
+  {{#each results}}
+  <tr>
+     <td style="padding:10px;">{{ name }}</td>
+     <td style="padding:10px;">{{ qty }}</td>
+     <td style="padding:10px;">{{ price }}</td>
+     <td style="padding:10px;">$ {{ rowTotal }}</td>
+  </tr>
+  {{/each}}
+ </table>
+</body>
+</html>

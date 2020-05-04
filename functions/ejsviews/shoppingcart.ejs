@@ -40,14 +40,6 @@
           <td><%= cart.contents[i].product.price.toFixed(2) %></td>
           <td>
             <input type="text" id="itqty" name="itqty" value="<%= cart.contents[i].qty %>" readonly> </input>
-          <form action="/b/addqty" method="post">
-            <input type="hidden" id="refid" name="refid" value="<%= cart.contents[i].product.id %>"> </input>
-            <button type="submit" class="btn btn-primary"> + </button>
-          </form>
-          <form action="/b/subqty" method="post">
-            <input type="hidden" id="refid" name="refid" value="<%= cart.contents[i].product.id %>"> </input>
-            <button type="submit" class="btn btn-primary"> - </button>
-          </form>
           </td>
           <td><%= (cart.contents[i].qty * cart.contents[i].product.price).toFixed(2) %></td>
           <td><%= cart.contents[i].product.summary %></td>

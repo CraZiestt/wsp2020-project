@@ -8,6 +8,25 @@
     <%- include('partials/header.ejs') %>
     
     <title>Store Front</title>
+    <style>
+      .pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+}
+
+/* Style the active/current link */
+.pagination a.active {
+  background-color: dodgerblue;
+  color: white;
+}
+
+/* Add a grey background color on mouse-over */
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+    </style>
   </head>
   <body>
       <%- include('partials/nav.ejs', {page: 'storefront', user}) %>
@@ -21,22 +40,23 @@
 
     <% for (let p of products) { %>
         <div class="card" style="width: 18rem; display: inline-block">
-            <img src="<%= p.data.image_url %>" class="card-img-top" >
+            <img height="250" src="<%= p.data.image_url %>" class="card-img-top" >
             <div class="card-body">
               <h5 class="card-title"><%= p.data.name %></h5>
-              <p class="card-text">$(<%= p.data.price %>) <br> <%= p.data.summary %></p>
+              <p class="card-text">$(<%= p.data.price? p.data.price : 0 %>) <br> <%= p.data.summary %></p>
               <form action="/b/add2cart" method="post">
                 <input type="hidden" name="docId" value="<%= p.id %>">
-                <button type="submit" class="btn btn-primary">Add to ShoppingCart</button>
+                <button type="submit" class="btn btn-primary">Add to Cart</button>
             </form>
             <br>
-            <form action="/b/add3cart" method="post">
-              <input type="hidden" name="docId" value="<%= p.id %>">
-              <button type="submit" class="btn btn-primary">Add to Wishlist</button>
-          </form>
             </div>
           </div>
         <% } %>
+
+        <div class="pagination">
+          <a href="/?page=prev&min=<%= pagination.min %>">Prev</a>
+          <a href="/?page=next&max=<%= pagination.max %>">Next</a>
+        </div>
 
     
     <% } %>
